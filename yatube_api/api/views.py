@@ -1,10 +1,10 @@
+from posts.models import Group, Post
+from rest_framework import filters, pagination, permissions, viewsets
 from rest_framework.generics import get_object_or_404
-from rest_framework import viewsets, pagination, permissions, filters
 
 from .permissions import IsAuthorOrReadOnlyPermission
-from posts.models import Group, Post
-from .serializers import CommentSerializer, GroupSerializer, \
-    PostSerializer, FollowSerializer
+from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
+                          PostSerializer)
 
 
 class PostViewSet(viewsets.ModelViewSet):
