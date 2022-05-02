@@ -5,16 +5,16 @@ from .views import CommentViewSet, FollowViewSet, GroupViewSet, PostViewSet
 
 app_name = 'api'
 
-router = routers.DefaultRouter()
-router.register('posts', PostViewSet, basename='api/v1/posts')
-router.register('groups', GroupViewSet, basename='api/v1/groups')
-router.register(
+router_v1 = routers.DefaultRouter()
+router_v1.register('posts', PostViewSet, basename='posts')
+router_v1.register('groups', GroupViewSet, basename='groups')
+router_v1.register(
     r'posts/(?P<post_id>[^/.]+)/comments', CommentViewSet,
-    basename='api/v1/comments')
-router.register('follow', FollowViewSet, basename='api/v1/follow')
+    basename='comments')
+router_v1.register('follow', FollowViewSet, basename='follow')
 
 urlpatterns = [
-    path('v1/', include(router.urls)),
+    path('v1/', include(router_v1.urls)),
     path('v1/', include('djoser.urls')),
     path('v1/', include('djoser.urls.jwt')),
 ]

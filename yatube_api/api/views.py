@@ -1,7 +1,7 @@
-from posts.models import Group, Post
-from rest_framework import filters, pagination, permissions, viewsets
+from rest_framework import filters, mixins, pagination, permissions, viewsets
 from rest_framework.generics import get_object_or_404
 
+from posts.models import Group, Post
 from .permissions import IsAuthorOrReadOnlyPermission
 from .serializers import (CommentSerializer, FollowSerializer, GroupSerializer,
                           PostSerializer)
@@ -40,7 +40,15 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=post)
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class ListCreateViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    viewsets.GenericViewSet
+):
+    pass
+
+
+class FollowViewSet(ListCreateViewSet):
     serializer_class = FollowSerializer
     permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
@@ -48,8 +56,9 @@ class FollowViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        queryset = user.follower.all()
-        return queryset
+        return user.follower.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        # вообще не могу понять что тут требуется....
+        # в сериалайзере же уже default=serializers.CurrentUserDefault()
