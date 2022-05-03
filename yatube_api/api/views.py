@@ -57,3 +57,8 @@ class FollowViewSet(ListCreateViewSet):
     def get_queryset(self):
         user = self.request.user
         return user.follower.all()
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+    # Совсем забыл! Без этого метода не проходит pytest
+    # tests/test_follow.py::TestFollowAPI::test_follow_create FAILED
