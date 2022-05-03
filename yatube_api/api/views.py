@@ -57,8 +57,3 @@ class FollowViewSet(ListCreateViewSet):
     def get_queryset(self):
         user = self.request.user
         return user.follower.all()
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-        # вообще не могу понять что тут требуется....
-        # в сериалайзере же уже default=serializers.CurrentUserDefault()

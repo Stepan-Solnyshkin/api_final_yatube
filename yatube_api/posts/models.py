@@ -10,10 +10,7 @@ class Group(models.Model):
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.title
-
-# не смог найти примеров подобного стиля
-# для строковых представлений: Group(title=..., slug=...)
+        return Group(title=self.title, slug=self.slug)
 
 
 class Post(models.Model):
