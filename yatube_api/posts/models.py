@@ -10,7 +10,8 @@ class Group(models.Model):
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return Group(title=self.title, slug=self.slug)
+        return f'Group {self.title}, slug {self.slug}'
+    # Оно же ш О_о?
 
 
 class Post(models.Model):
