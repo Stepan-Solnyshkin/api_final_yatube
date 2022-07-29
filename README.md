@@ -1,4 +1,4 @@
-# Проект YaTube API
+# YaTube API
 
 ## Описание
 
